@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SYS Dashboard Monitoring DPA</title> <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <script src="https://cdn.plot.ly/plotly-2.27.1.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="sidebar-collapsed">
+
+    <div class="sidebar">
+        <div class="sidebar-logo">
+            <img src="your-logo.png" alt="SYS Logo">
+        </div>
+        <div class="nav-item active" id="menuDashboard"><i class="fas fa-tachometer-alt"></i><span>Dashboard</span></div>
+        <div class="nav-item" id="menuDataMahasiswa"><i class="fas fa-users"></i><span>Data Mahasiswa</span></div>
+        <div class="nav-item" id="menuDosenPembimbing"><i class="fas fa-chalkboard-teacher"></i><span>Dosen Pembimbing Akademik</span></div> <div class="nav-item" id="menuProdiStats"><i class="fas fa-chart-line"></i><span>Statistik Prodi</span></div>
+        <div class="nav-item" id="menuAnalytics"><i class="fas fa-chart-pie"></i><span>Grafik</span></div>
+        <div class="nav-item" id="menuReport"><i class="fas fa-file-alt"></i><span>Report</span></div>
+        <div class="nav-item" id="menuLogout" style="margin-top: auto;"><i class="'fas fa-sign-out-alt'"></i><span> </span></div>
+    </div>
+
+    <div class="main-wrapper">
+        <div class="header">
+            <div class="header-left">
+                <i class="fas fa-bars sidebar-toggle" id="sidebarToggle"></i>
+                <div class="logo-text">Dashboard Monitoring Mahasiswa DPA</div> </div>
+            <div class="header-right">
+                <div class="date-display" id="currentDate"></div>
+                <i class="fas fa-sync-alt refresh-icon" id="refreshDataBtn"></i>
+                <div class="profile-section">
+                    <span class="profile-name">Akademik</span>
+                    <img src="your-logo.png" alt="Profile" class="profile-img">
+                </div>
+                <i class="fas fa-bars menu-icon"></i>
+            </div>
+        </div>
+
+        <div class="main-body">
+            <div id="globalMessageContainer" class="global-message-container"></div>
+
+            <div id="dashboardPage" class="page-section">
+                <div class="overview-cards-grid">
+                    <div class="overview-card">
+                        <div class="overview-card-top">
+                            <div class="text-content">
+                                <div class="overview-card-title">Jumlah Keseluruhan</div> <div class="overview-card-value" id="totalMahasiswaSkripsiTA">-</div> </div>
+                            <div class="circular-progress">
+                                <div class="circular-progress-gradient" style="--progress: 0%;"></div>
+                                <div class="circular-progress-inner" id="totalMahasiswaSkripsiTAProgress">0%</div>
+                            </div>
+                        </div>
+                        <div class="overview-card-bottom">
+                            <div class="overview-card-percentage positive"><i class="fas fa-users"></i> <span id="totalMahasiswaSkripsiTAChange">0%</span></div>
+                            <div class="overview-card-time">Total Keseluruhan</div>
+                        </div>
+                    </div>
+
+                    <div class="overview-card">
+                        <div class="overview-card-top">
+                            <div class="text-content">
+                                <div class="overview-card-title">Sistem Informasi</div> <div class="overview-card-value" id="jumlahProdiSI">-</div>
+                            </div>
+                            <div class="circular-progress">
+                                <div class="circular-progress-gradient" style="--progress: 0%;"></div>
+                                <div class="circular-progress-inner" id="jumlahProdiSIProgress">0%</div>
+                            </div>
+                        </div>
+                        <div class="overview-card-bottom">
+                            <div class="overview-card-percentage positive"><i class="fas fa-users"></i> <span id="jumlahProdiSIChange">0%</span></div> <div class="overview-card-time">Total Mahasiswa Prodi</div>
+                        </div>
+                    </div>
+
+                    <div class="overview-card">
+                        <div class="overview-card-top">
+                            <div class="text-content">
+                                <div class="overview-card-title">Teknik Informatika</div> <div class="overview-card-value" id="jumlahProdiTI">-</div>
+                            </div>
+                            <div class="circular-progress">
+                                <div class="circular-progress-gradient" style="--progress: 0%;"></div>
+                                <div class="circular-progress-inner" id="jumlahProdiTIProgress">0%</div>
+                            </div>
+                        </div>
+                        <div class="overview-card-bottom">
+                            <div class="overview-card-percentage positive"><i class="fas fa-users"></i> <span id="jumlahProdiTIChange">0%</span></div> <div class="overview-card-time">Total Mahasiswa Prodi</div>
+                        </div>
+                    </div>
+
+                    <div class="overview-card">
+                        <div class="overview-card-top">
+                            <div class="text-content">
+                                <div class="overview-card-title">Teknik Multimedia dan Jaringan</div> <div class="overview-card-value" id="jumlahProdiTMJ">-</div>
+                            </div>
+                            <div class="circular-progress">
+                                <div class="circular-progress-gradient" style="--progress: 0%;"></div>
+                                <div class="circular-progress-inner" id="jumlahProdiTMJProgress">0%</div>
+                            </div>
+                        </div>
+                        <div class="overview-card-bottom">
+                            <div class="overview-card-percentage positive"><i class="fas fa-users"></i> <span id="jumlahProdiTMJChange">0%</span></div> <div class="overview-card-time">Total Mahasiswa Prodi</div>
+                        </div>
+                    </div>
+
+                    <div class="overview-card">
+                        <div class="overview-card-top">
+                            <div class="text-content">
+                                <div class="overview-card-title">Komputerisasi Akuntansi</div> <div class="overview-card-value" id="jumlahProdiKA">-</div>
+                            </div>
+                            <div class="circular-progress">
+                                <div class="circular-progress-gradient" style="--progress: 0%;"></div>
+                                <div class="circular-progress-inner" id="jumlahProdiKAProgress">0%</div>
+                            </div>
+                        </div>
+                        <div class="overview-card-bottom">
+                            <div class="overview-card-percentage positive"><i class="fas fa-users"></i> <span id="jumlahProdiKAChange">0%</span></div> <div class="overview-card-time">Total Mahasiswa Prodi</div>
+                        </div>
+                    </div>
+
+                    <div class="overview-card">
+                        <div class="overview-card-top">
+                            <div class="text-content">
+                                <div class="overview-card-title">Mahasiswa Penerima Beasiswa</div>
+                                <div class="overview-card-value" id="jumlahMahasiswaBeasiswa">-</div> </div>
+                            <div class="circular-progress">
+                                <div class="circular-progress-gradient" style="--progress: 0%;"></div>
+                                <div class="circular-progress-inner" id="jumlahMahasiswaBeasiswaProgress">0%</div> </div>
+                        </div>
+                        <div class="overview-card-bottom">
+                            <div class="overview-card-percentage positive"><i class="fas fa-hand-holding-usd"></i> <span id="jumlahMahasiswaBeasiswaChange">0%</span></div> <div class="overview-card-time">Dari Total Mahasiswa</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <div class="section-header">
+                        <h3>Ringkasan Statistik Mahasiswa per Program Studi</h3> <a href="#" class="show-all-link" id="showAllMahasiswa">Show All</a>
+                    </div>
+                    <div id="recentMahasiswaTable">
+                        </div>
+                </div>
+            </div>
+
+            <div id="prodiStatsPage" class="page-section" style="display:none;">
+                <div class="filter-bar">
+                    <select id="prodiSelectorForStats">
+                        <option value="all">Pilih Program Studi</option>
+                        </select>
+                </div>
+                <div class="section">
+                    <h3>Statistik Program Studi: <span id="currentProdiStatsName">Pilih Prodi</span></h3>
+                    <div class="overview-cards-grid" id="prodiSpecificStatsCards">
+                        <p style="text-align:center; grid-column: 1 / -1; color:#777;">Silakan pilih program studi dari dropdown di atas untuk melihat statistiknya.</p>
+                    </div>
+                </div>
+                <div class="section">
+                    <h3>Daftar Mahasiswa di Prodi</h3>
+                    <div id="recentMahasiswaTable_prodiStats"></div> </div>
+            </div>
+            <div id="dataMahasiswaPage" class="page-section" style="display:none;">
+                <div class="filter-bar">
+                    <input type="text" id="searchBox" placeholder="Cari Nama/NIM...">
+                    <select id="statusFilter"> <option value="all">Semua Status Beasiswa</option> </select>
+                    <select id="prodiFilter">
+                        <option value="all">Semua Program Studi</option>
+                    </select>
+                </div>
+                <div class="section" id="detailTable">
+                </div>
+            </div>
+
+            <div id="dosenPembimbingPage" class="page-section" style="display:none;">
+                <div class="filter-bar">
+                    <input type="text" id="searchBoxDosen" placeholder="Cari Nama Dosen Pembimbing Akademik..."> </div>
+                <div class="section">
+                    <h3>Daftar Dosen Pembimbing Akademik</h3> <div id="dosenListTable">
+                        </div>
+                </div>
+            </div>
+            <div id="mahasiswaBimbinganDetailPage" class="page-section" style="display:none;">
+                <div class="section">
+                    <h3>Statistik Bimbingan Dosen: <span id="currentDosenName"></span></h3>
+                    <div class="overview-cards-grid" id="dosenStatsCards">
+                        </div>
+                </div>
+                <div class="filter-bar" style="margin-top: 25px;">
+                    <input type="text" id="searchBoxBimbingan" placeholder="Cari Nama/NIM Mahasiswa Bimbingan...">
+                    <select id="statusFilterBimbingan"> <option value="all">Semua Status Beasiswa</option> </select>
+                </div>
+                <div class="section">
+                    <h3>Daftar Mahasiswa Bimbingan</h3>
+                    <div id="mahasiswaBimbinganTable">
+                        </div>
+                    <button id="backToDosenListFromBimbinganBtn" class="pagination-button" style="margin-top: 20px;">
+                        <i class="fas fa-arrow-left"></i> Kembali ke Daftar Dosen
+                    </button>
+                </div>
+            </div>
+            <div id="analyticsPage" class="page-section" style="display:none;">
+                <div class="section">
+                    <h3>Grafik Distribusi Mahasiswa per Program Studi</h3> <div id="programStudiChart"></div>
+                </div>
+                <div class="section">
+                    <h3>Grafik Distribusi Mahasiswa Beasiswa</h3> <div id="progressStatusChartSI"></div>
+                </div>
+                <div class="section">
+                    <h3>Grafik Studi Akhir - Teknik Informatika</h3>
+                    <div id="progressStatusChartTI"></div>
+                </div>
+                <div class="section">
+                    <h3>Grafik Studi Akhir - Teknik Multimedia dan Jaringan</h3>
+                    <div id="progressStatusChartTMJ"></div>
+                </div>
+                <div class="section">
+                    <h3>Grafik Studi Akhir - Komputerisasi Akuntansi</h3>
+                    <div id="progressStatusChartKA"></div>
+                </div>
+            </div>
+
+            <div id="reportPage" class="page-section" style="display:none;">
+                <div class="section">
+                    <h2>Laporan dan Export</h2>
+                    <p>Fitur report export akan ditambahkan di sini.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+
+    <footer style="text-align:center; padding:10px 0; font-size:12px; color:#777; width: 100%; background-color: #fff; box-shadow: 0 -2px 5px rgba(0,0,0,0.02);">
+        © 2025 SYS Academic. All rights reserved.
+    </footer>
+
+</body>
+</html>

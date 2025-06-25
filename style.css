@@ -1,0 +1,728 @@
+/* Transisi global untuk properti yang umum berubah */
+* {
+    box-sizing: border-box;
+    transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease, opacity 0.3s ease, width 0.3s ease, margin-left 0.3s ease, padding 0.3s ease;
+}
+/* Global styles and body background */
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+    font-family: 'Inter', sans-serif;
+    overflow-y: auto;
+    box-sizing: border-box;
+    transition: none;
+}
+body {
+    display: flex;
+    flex-direction: column; /* Changed to column to allow footer at the bottom */
+    background-color: #f4f6f9; /* Light background similar to image */
+    min-height: 100vh;
+    color: #333; /* Default text color */
+    transition: margin-left 0.3s ease; /* Smooth transition for body content */
+}
+
+/* Sidebar Styling */
+.sidebar {
+    width: 250px; /* Default wider sidebar */
+    background-color: #fff; /* White background */
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* Align items to start */
+    padding: 20px;
+    position: fixed;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    box-shadow: 2px 0 10px rgba(0,0,0,0.05); /* Softer shadow */
+    z-index: 10;
+    transition: width 0.3s ease, padding 0.3s ease; /* Smooth transition for sidebar width */
+    overflow-x: hidden; /* Hide horizontal overflow during collapse */
+}
+.sidebar-logo {
+    width: 100%; /* Ensure logo div takes full width */
+    text-align: center;
+    margin-bottom: 40px;
+}
+.sidebar-logo img { /* Image within sidebar logo */
+    width: 150px; /* Larger logo image */
+    height: auto;
+    transition: width 0.3s ease; /* Smooth transition for logo image */
+}
+.nav-item {
+    color: #555;
+    font-size: 16px;
+    margin: 10px 0;
+    cursor: pointer;
+    transition: color 0.3s, background-color 0.3s, border-radius 0.3s, box-shadow 0.3s;
+    text-align: left;
+    padding: 10px 15px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    border-radius: 8px;
+    white-space: nowrap; /* Prevent text wrapping */
+    position: relative; /* Tetap pertahankan ini jika suatu saat ada dropdown lain */
+}
+.nav-item i {
+    font-size: 20px;
+    margin-right: 15px;
+    transition: margin-right 0.3s ease, transform 0.2s ease; /* Tambahkan transform */;
+}
+.nav-item span {
+    display: inline;
+    font-size: 16px;
+    font-weight: 500;
+    opacity: 1; /* Default opacity */
+    transition: opacity 0.3s ease; /* Smooth transition for text opacity */
+}
+.nav-item:hover i {
+    transform: scale(1.1); /* Sedikit membesar saat hover */
+}
+.nav-item:hover, .nav-item.active {
+    color: #3498db;
+    background-color: #eaf6ff;
+    font-weight: 600;
+}
+.nav-item.active {
+    box-shadow: inset 3px 0 0 #3498db;
+}
+
+/* Hapus semua gaya yang terkait dengan dropdown dosen di sidebar (karena sudah dipindahkan) */
+.nav-item .dropdown-arrow { display: none; }
+.dropdown-content { display: none; }
+.nav-item.open .dropdown-content { display: none; }
+.dropdown-search-input { display: none; }
+.dropdown-list-container { display: none; }
+
+
+/* Main Content Area */
+.main-wrapper { /* New wrapper for header + content */
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    margin-left: 250px; /* Adjusted to match sidebar width */
+    width: calc(100% - 250px); /* Adjust width for sidebar */
+    transition: margin-left 0.3s ease, width 0.3s ease; /* Smooth transition for main-body */
+}
+.main-body { /* Actual content area */
+    padding: 30px;
+    flex-grow: 1; /* Allows content to take available space */
+}
+
+/* Header Styling */
+.header {
+    background: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px 25px;
+    border-radius: 15px;
+    margin: 30px; /* Added margin */
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    border: 1px solid #eee;
+}
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: 20px; /* Space between toggle and logo text */
+}
+.header-left .logo-text {
+    font-size: 28px;
+    font-weight: bold;
+    color: #333;
+}
+.sidebar-toggle { /* Style for the new toggle button */
+    font-size: 24px;
+    color: #555;
+    cursor: pointer;
+    transition: transform 0.3s ease, color 0.3s ease;
+}
+.sidebar-toggle:hover {
+    color: #3498db;
+    transform: scale(1.1);
+}
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+.header-right .date-display {
+    font-size: 14px;
+    color: #777;
+}
+/* Refresh Icon Styling */
+.refresh-icon {
+    font-size: 20px; /* Ukuran ikon */
+    color: #555; /* Warna ikon */
+    cursor: pointer; /* Menunjukkan bahwa ini dapat diklik */
+    transition: transform 0.3s ease, color 0.3s ease; /* Transisi halus untuk hover */
+}
+
+.refresh-icon:hover {
+    color: #3498db; /* Warna saat hover */
+    transform: rotate(30deg); /* Efek putar saat hover */
+}
+
+/* Responsive adjustment for refresh icon */
+@media screen and (max-width: 768px) {
+    .header-right .refresh-icon {
+        order: 3; /* Posisikan setelah profile-section di mobile */
+        font-size: 20px; /* Ukuran yang sesuai untuk mobile */
+    }
+}
+.header-right .profile-section {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.header-right .profile-name {
+    font-weight: 600;
+    font-size: 15px;
+}
+.header-right .profile-img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #3498db;
+}
+.header-right .menu-icon {
+    font-size: 24px;
+    color: #555;
+    cursor: pointer;
+    display: none; /* Hidden on desktop, shown on mobile */
+}
+
+/* Overview Cards Styling (Matching the image) */
+.overview-cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 25px;
+    margin-bottom: 30px;
+}
+.overview-card {
+    background: #fff;
+    border-radius: 15px;
+    padding: 25px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border: 1px solid #eee;
+}
+.overview-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+    border-color: #3498db; /* Tambah border-color saat hover */
+}
+.overview-card-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 15px;
+}
+.overview-card-icon {
+    font-size: 30px;
+    color: #3498db;
+    background-color: #eaf6ff;
+    padding: 10px;
+    border-radius: 50%;
+}
+.overview-card-title {
+    font-size: 16px;
+    color: #777;
+    margin-bottom: 5px;
+}
+.overview-card-value {
+    font-size: 36px;
+    font-weight: bold;
+    color: #333;
+}
+.overview-card-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 15px;
+}
+.overview-card-percentage {
+    font-weight: bold;
+    font-size: 15px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+.overview-card-percentage.positive { color: #2ecc71; }
+.overview-card-percentage.negative { color: #e74c3c; }
+.overview-card-percentage i { font-size: 12px; }
+.overview-card-time {
+    font-size: 13px;
+    color: #999;
+}
+
+/* Circular Progress Bar (simple CSS based) */
+.circular-progress {
+    position: relative;
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    background-color: #eee;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+.circular-progress-inner {
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background-color: #fff;
+    z-index: 2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 14px;
+    font-weight: bold;
+    color: #555;
+}
+.circular-progress-gradient {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: conic-gradient(#3498db var(--progress, 0%), #eee var(--progress, 0%)); /* Dynamic gradient */
+}
+
+/* Recent Orders / Table Section */
+.section {
+    background: #fff;
+    border-radius: 15px;
+    padding: 25px;
+    margin-bottom: 25px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+    border: 1px solid #eee;
+}
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+.section-header h3 {
+    font-size: 22px;
+    font-weight: bold;
+    color: #333;
+    margin: 0;
+}
+.show-all-link {
+    font-size: 14px;
+    color: #3498db;
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.2s;
+}
+.show-all-link:hover {
+    color: #2980b9;
+    text-decoration: underline;
+}
+
+/* Table Styling */
+table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    border-radius: 10px;
+    overflow: hidden;
+}
+th, td {
+    border: none;
+    font-size: 14px; /* Default table font size */
+    padding: 7px 10px;
+    text-align: left;
+}
+th {
+    background-color: #f8f9fa;
+    color: #555;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    border-bottom: 1px solid #eee;
+    text-align: center;
+}
+td {
+    background-color: #fff;
+    color: #444;
+    border-bottom: 1px solid #f0f0f0;
+}
+table tbody tr:last-child td {
+    border-bottom: none;
+}
+table tbody tr {
+    transition: background-color 0.2s ease, filter 0.2s ease; /* Tambahkan filter ke transisi */
+}
+table tbody tr:hover {
+    background-color: #eaf6ff; /* Tetap gunakan warna dasar hover */
+    filter: brightness(80%); /* Gelapkan 20% (100% - 20% = 80%) */
+}
+/* Jika Anda ingin hanya teksnya yang lebih gelap, bukan seluruh baris,
+    ini akan lebih rumit dan memerlukan JavaScript untuk menambahkan kelas ke <td>.
+    Namun, permintaan Anda adalah "warna kolom", yang biasanya berarti latar belakang baris. */
+td.nama,
+td.program-studi {
+    text-align: left;
+}
+
+/* Specific font size for Data Mahasiswa table */
+#dataMahasiswaPage table td,
+#dosenPembimbingPage table td, /* Untuk tabel daftar dosen */
+#mahasiswaBimbinganTable table td { /* Untuk tabel mahasiswa bimbingan */
+    font-size: 14px;
+}
+.status-badge {
+    padding: 4px 8px;
+    border-radius: 5px;
+    font-size: 12px;
+    font-weight: 600;
+    color: white;
+}
+/* New styles for Beasiswa status */
+.status-badge.beasiswa-kipk { background-color: #e74c3c; } /* Green for 'KIPK' */
+.status-badge.beasiswa-non { background-color: #2ecc71; } /* Red for 'Non Beasiswa' */
+.status-badge.beasiswa-unknown { background-color: #7f8c8d; } /* Grey for 'Tidak Diketahui' */
+
+
+/* Pagination Button Styling */
+.pagination-button {
+    padding: 8px 16px;
+    margin: 0 5px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #fff;
+    color: #555;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+.pagination-button:hover:not(:disabled) {
+    background-color: #f0f0f0;
+    color: #3498db;
+    border-color: #c0c0c0;
+    transform: translateY(-1px); /* Sedikit efek naik */
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Efek bayangan lebih kuat */
+}
+.pagination-button:disabled {
+    background: #f8f8f8;
+    color: #bbb;
+    cursor: not-allowed;
+    box-shadow: none;
+}
+
+/* Filters and Search on Data Mahasiswa Page */
+.filter-bar {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 25px;
+    flex-wrap: wrap;
+    background: #fff;
+    padding: 15px 25px;
+    border-radius: 15px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    border: 1px solid #eee;
+}
+.filter-bar input[type="text"],
+.filter-bar select {
+    flex: 1;
+    min-width: 150px;
+    padding: 10px 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 15px;
+    color: #333;
+    background-color: #fcfcfc;
+    transition: border-color 0.2s, box-shadow 0.2s, background-color 0.2s;
+}
+.filter-bar input[type="text"]:focus,
+.filter-bar select:focus {
+    outline: none;
+    border-color: #3498db;
+    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+    background-color: #fff; /* Sedikit mencerah saat fokus */
+}
+
+/* Styles for Collapsed Sidebar */
+body.sidebar-collapsed .sidebar {
+    width: 80px;
+    padding: 20px 0;
+    align-items: center; /* Center items when collapsed */
+}
+body.sidebar-collapsed .sidebar-logo img {
+    width: 50px; /* Smaller logo image when collapsed */
+}
+body.sidebar-collapsed .nav-item {
+    padding: 10px 0; /* Adjust padding */
+    justify-content: center; /* Center icons */
+}
+body.sidebar-collapsed .nav-item i {
+    margin-right: 0; /* Remove margin right */
+}
+body.sidebar-collapsed .nav-item span {
+    opacity: 0; /* Hide text */
+    width: 0; /* Collapse text width */
+    overflow: hidden;
+    display: none; /* Fully hide the span */
+}
+body.sidebar-collapsed .main-wrapper { /* Adjust main-wrapper margin */
+    margin-left: 80px;
+    width: calc(100% - 80px);
+}
+
+/* --- Gaya untuk Kartu Dosen di dalam Halaman Detail Bimbingan --- */
+#dosenStatsCards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Kolom yang lebih kecil untuk banyak kartu */
+    gap: 15px; /* Jarak antar kartu */
+    margin-bottom: 30px;
+    background: #fff;
+    border-radius: 15px;
+    padding: 25px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+    border: 1px solid #eee;
+}
+
+.dosen-summary-card {
+    background: #f8f9fa; /* Latar belakang lebih terang */
+    border-radius: 10px;
+    padding: 15px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    border: 1px solid #eee;
+    text-align: center;
+}
+
+/* Adjusted background colors based on new stats */
+.dosen-summary-card.total { background-color: #eaf6ff; } /* Biru muda */
+.dosen-summary-card.KIPK { background-color: #f8d7da; } /* Hijau muda */
+.dosen-summary-card.NonBeasiswa { background-color: #d4edda; } /* Merah muda */
+
+
+.dosen-summary-card .label {
+    font-size: 12px;
+    color: #777;
+    margin-bottom: 5px;
+    font-weight: 500;
+}
+.dosen-summary-card .value {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+}
+.dosen-summary-card .percentage {
+    font-size: 11px;
+    color: #666;
+}
+
+/* Global message container styles */
+.global-message-container {
+    padding: 15px;
+    margin: 20px 30px 0 30px; /* Top margin, horizontal margin matches header */
+    border-radius: 8px;
+    font-weight: 500;
+    text-align: center;
+    display: none; /* Hidden by default */
+    position: relative;
+    z-index: 100; /* Ensure it's on top */
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.global-message-container.loading {
+    background-color: #e0f7fa; /* Light blue */
+    color: #00796b; /* Darker blue green */
+    border: 1px solid #00bcd4;
+}
+
+.global-message-container.error {
+    background-color: #ffe0b2; /* Light orange */
+    color: #e65100; /* Darker orange */
+    border: 1px solid #ff9800;
+}
+
+.global-message-container .close-button {
+    position: absolute;
+    top: 5px;
+    right: 10px;
+    font-size: 18px;
+    cursor: pointer;
+    color: inherit;
+    background: none;
+    border: none;
+    padding: 0;
+}
+.global-message-container .close-button:hover {
+    opacity: 0.7;
+}
+
+/* Responsive Media Queries */
+@media screen and (max-width: 1024px) {
+    /* Default collapsed state for smaller desktops/tablets */
+    .sidebar {
+        width: 80px;
+        align-items: center;
+        padding: 20px 0;
+    }
+    .sidebar-logo img {
+        width: 50px;
+    }
+    .nav-item {
+        padding: 10px 0;
+        justify-content: center;
+    }
+    .nav-item i { margin-right: 0; }
+    .nav-item span { display: none; }
+    .main-wrapper {
+        margin-left: 80px;
+        width: calc(100% - 80px);
+    }
+    .header-left .logo-text { font-size: 24px; }
+    .overview-card { padding: 20px; }
+    .overview-card-value { font-size: 32px; }
+    .circular-progress { width: 60px; height: 60px; }
+    .circular-progress-inner { width: 50px; height: 50px; font-size: 12px; }
+    .circular-progress-gradient { background: conic-gradient(#3498db var(--progress, 0%), #eee var(--progress, 0%)); }
+
+    .section h3 { font-size: 20px; }
+    th, td { font-size: 13px; padding: 10px; }
+    .filter-bar input[type="text"],
+    .filter-bar select { min-width: unset; }
+
+    /* Override user-controlled collapse if screen is already small */
+    body.sidebar-collapsed .sidebar {
+        width: 80px; /* Remains 80px */
+    }
+    body.sidebar-collapsed .main-wrapper {
+        margin-left: 80px; /* Remains 80px */
+    }
+
+    /* Penyesuaian kartu statistik dosen di tablet */
+    #dosenStatsCards {
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 10px;
+        padding: 20px;
+    }
+    .dosen-summary-card .value { font-size: 20px; }
+    .dosen-summary-card .label { font-size: 11px; }
+    .dosen-summary-card .percentage { font-size: 10px; }
+
+    .global-message-container {
+        margin: 15px 20px 0 20px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    body { flex-direction: column; }
+    .sidebar {
+        position: relative;
+        width: 100%;
+        height: auto;
+        flex-direction: row;
+        justify-content: space-around;
+        padding: 10px 0;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        border-bottom: 1px solid #eee;
+        align-items: center; /* Center items horizontally in row layout */
+    }
+    .sidebar-logo { display: none; } /* Hide logo on mobile */
+    .nav-item { margin: 0 5px; padding: 8px 10px; border-radius: 5px; }
+    .nav-item i { margin-right: 5px; }
+    .nav-item span { display: inline; font-size: 12px; } /* Show text for mobile nav */
+    .main-wrapper {
+        margin-left: 0;
+        padding: 0; /* Remove padding from wrapper */
+        width: 100%;
+    }
+    .main-body {
+        padding: 20px; /* Apply padding to main-body */
+    }
+    .header {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 15px;
+        gap: 15px;
+        margin: 15px; /* Adjust margin for header */
+    }
+    .header-right {
+        width: 100%;
+        justify-content: space-between;
+    }
+    .header-right .profile-section { order: 2; }
+    .header-right .date-display { order: 1; }
+    .header-right .menu-icon { display: block; }
+
+    .overview-cards-grid {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+    .overview-card { padding: 20px; }
+    .overview-card-value { font-size: 30px; }
+    .circular-progress { width: 50px; height: 50px; }
+    .circular-progress-inner { width: 40px; height: 40px; font-size: 10px; }
+    .circular-progress-gradient { background: conic-gradient(#3498db var(--progress, 0%), #eee var(--progress, 0%)); }
+
+    .filter-bar {
+        flex-direction: column;
+        gap: 10px;
+        margin: 15px; /* Adjust margin for filter bar */
+    }
+    .filter-bar input[type="text"],
+    .filter-bar select { width: 100%; }
+    th, td { font-size: 11px; padding: 8px; }
+    .status-badge { padding: 3px 6px; font-size: 11px; }
+
+    /* Mobile: Sidebar toggle is irrelevant, sidebar is always full-width/row */
+    body.sidebar-collapsed .sidebar {
+        width: 100%; /* Stays 100% */
+    }
+    body.sidebar-collapsed .main-wrapper {
+        margin-left: 0; /* Stays 0 */
+    }
+
+    /* Penyesuaian kartu statistik dosen di mobile */
+    #dosenStatsCards {
+        grid-template-columns: repeat(2, 1fr); /* 2 kolom di mobile agar tidak terlalu kecil */
+        gap: 8px;
+        padding: 15px;
+    }
+    .dosen-summary-card {
+        padding: 10px;
+    }
+    .dosen-summary-card .value { font-size: 18px; }
+    .dosen-summary-card .label { font-size: 10px; }
+    .dosen-summary-card .percentage { font-size: 9px; }
+
+    .global-message-container {
+        margin: 15px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .main-body { padding: 15px; }
+    .header-left .logo-text { font-size: 22px; }
+    .overview-card-value { font-size: 28px; }
+    .overview-card-icon { font-size: 25px; padding: 8px; }
+    .circular-progress { width: 45px; height: 45px; }
+    .circular-progress-inner { width: 35px; height: 35px; font-size: 9px; }
+    .circular-progress-gradient { background: conic-gradient(#3498db var(--progress, 0%), #eee var(--progress, 0%)); }
+    .section { padding: 20px; }
+    .section-header h3 { font-size: 18px; }
+    th, td { font-size: 10px; padding: 6px; }
+    .pagination-button { padding: 6px 12px; font-size: 12px; }
+
+    #dosenStatsCards {
+        grid-template-columns: 1fr; /* 1 kolom di layar sangat kecil */
+    }
+}
