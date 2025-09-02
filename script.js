@@ -428,7 +428,7 @@ function renderDosenStatsCards(dosenName) {
     const statOrder = [
         { label: "Total Dibimbing", key: "total", icon: "fas fa-users" },
         { label: "Mahasiswa KIPK", key: "KIPK", icon: "fas fa-users" },
-        { label: "Mahasiswa Non-Beasiswa", key: "Non KIPK", icon: "fas fa-users" }
+        { label: "Mahasiswa Non KIPK", key: "Non KIPK", icon: "fas fa-users" }
         // If "Tidak Diketahui Beasiswa" needs a card:
         // { label: "Beasiswa Tidak Diketahui", key: "Tidak Diketahui Beasiswa", icon: "fas fa-question-circle" }
     ];
@@ -1056,4 +1056,5 @@ function generateProdiProgressPieChart(data, contextName, targetElementId, title
     Plotly.newPlot(targetElementId, dataPlotly, layout, {responsive: true, displayModeBar: false});
 
 }
+
 
