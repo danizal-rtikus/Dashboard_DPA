@@ -471,7 +471,7 @@ function renderProdiSpecificStatsCards(prodiName) {
     let statOrder = [
         { label: `Jumlah Mahasiswa`, key: "total", icon: "fas fa-users" },
         { label: "Mahasiswa KIPK", key: "KIPK", icon: "fas fa-users" },
-        { label: "Mahasiswa Non-Beasiswa", key: "Non KIPK", icon: "fas fa-users" }
+        { label: "Mahasiswa Non-KIPK", key: "Non KIPK", icon: "fas fa-users" }
     ];
 
     // Define common card background colors
@@ -1056,5 +1056,6 @@ function generateProdiProgressPieChart(data, contextName, targetElementId, title
     Plotly.newPlot(targetElementId, dataPlotly, layout, {responsive: true, displayModeBar: false});
 
 }
+
 
 
