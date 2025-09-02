@@ -211,19 +211,19 @@ async function loadDataFromAppsScript() {
             originalData.forEach(d => {
                 const dpaName = d["Dosen Pembimbing Akademik"]; // Column name from CSV
                 const prodi = d["Program Studi"] || "Tidak Diketahui"; // Column name from CSV
-                const beasiswaStatus = d["Beasiswa"] || "Tidak Diketahui"; // Column name from CSV (e.g., "KIPK", "Non Beasiswa")
+                const beasiswaStatus = d["Beasiswa"] || "Tidak Diketahui"; // Column name from CSV (e.g., "KIPK", "Non KIPK")
 
                 // Calculate Faculty Statistics (Dosen Pembimbing Akademik)
                 if (dpaName) {
                     dosenSet.add(dpaName);
                     if (!tempDosenStats[dpaName]) {
-                        tempDosenStats[dpaName] = { total: 0, "KIPK": 0, "Non Beasiswa": 0, "Tidak Diketahui Beasiswa": 0 };
+                        tempDosenStats[dpaName] = { total: 0, "KIPK": 0, "Non KIPK": 0, "Tidak Diketahui Beasiswa": 0 };
                     }
                     tempDosenStats[dpaName].total++;
                     if (beasiswaStatus === "KIPK") {
                         tempDosenStats[dpaName]["KIPK"]++;
-                    } else if (beasiswaStatus === "Non Beasiswa") {
-                        tempDosenStats[dpaName]["Non Beasiswa"]++;
+                    } else if (beasiswaStatus === "Non KIPK") {
+                        tempDosenStats[dpaName]["Non KIPK"]++;
                     } else {
                         tempDosenStats[dpaName]["Tidak Diketahui Beasiswa"]++;
                     }
@@ -231,13 +231,13 @@ async function loadDataFromAppsScript() {
 
                 // Calculate Program Study Statistics
                 if (!tempProdiStatsData[prodi]) {
-                    tempProdiStatsData[prodi] = { total: 0, "KIPK": 0, "Non Beasiswa": 0, "Tidak Diketahui Beasiswa": 0 };
+                    tempProdiStatsData[prodi] = { total: 0, "KIPK": 0, "Non KIPK": 0, "Tidak Diketahui Beasiswa": 0 };
                 }
                 tempProdiStatsData[prodi].total++;
                 if (beasiswaStatus === "KIPK") {
                     tempProdiStatsData[prodi]["KIPK"]++;
-                } else if (beasiswaStatus === "Non Beasiswa") {
-                    tempProdiStatsData[prodi]["Non Beasiswa"]++;
+                } else if (beasiswaStatus === "Non KIPK") {
+                    tempProdiStatsData[prodi]["Non KIPK"]++;
                 } else {
                     tempProdiStatsData[prodi]["Tidak Diketahui Beasiswa"]++;
                 }
@@ -384,13 +384,13 @@ function updateDosenListTable() {
     </thead><tbody>`;
 
     filteredDosen.forEach((dosenName, i) => {
-        const stats = dosenStats[dosenName] || {total: 0, KIPK: 0, "Non Beasiswa": 0, "Tidak Diketahui Beasiswa": 0};
+        const stats = dosenStats[dosenName] || {total: 0, KIPK: 0, "Non KIPK": 0, "Tidak Diketahui Beasiswa": 0};
         tableHTML += `<tr data-dosen-name="${dosenName}">
             <td>${i + 1}</td>
             <td class="nama-dosen">${dosenName}</td>
             <td>${stats.total}</td>
             <td>${stats.KIPK}</td>
-            <td>${stats["Non Beasiswa"]}</td>
+            <td>${stats["Non KIPK"]}</td>
         </tr>`;
     });
 
@@ -428,7 +428,7 @@ function renderDosenStatsCards(dosenName) {
     const statOrder = [
         { label: "Total Dibimbing", key: "total", icon: "fas fa-users" },
         { label: "Mahasiswa KIPK", key: "KIPK", icon: "fas fa-users" },
-        { label: "Mahasiswa Non-Beasiswa", key: "Non Beasiswa", icon: "fas fa-users" }
+        { label: "Mahasiswa Non-Beasiswa", key: "Non KIPK", icon: "fas fa-users" }
         // If "Tidak Diketahui Beasiswa" needs a card:
         // { label: "Beasiswa Tidak Diketahui", key: "Tidak Diketahui Beasiswa", icon: "fas fa-question-circle" }
     ];
@@ -437,7 +437,7 @@ function renderDosenStatsCards(dosenName) {
         const value = stats[stat.key] || 0;
         const percentage = totalBimbingan > 0 ? ((value / totalBimbingan) * 100).toFixed(1) : 0;
         const cardClass = stat.key.replace(/\s/g, ''); // Remove spaces for CSS class
-        // Ensure class name is valid for CSS (e.g., "KIPK" becomes "KIPK", "Non Beasiswa" becomes "NonBeasiswa")
+        // Ensure class name is valid for CSS (e.g., "KIPK" becomes "KIPK", "Non KIPK" becomes "NonBeasiswa")
         let finalCardClass = stat.key.replace(/\s/g, '');
         if (finalCardClass === "NonBeasiswa") finalCardClass = "NonBeasiswa"; // Specific class for CSS
 
@@ -471,14 +471,14 @@ function renderProdiSpecificStatsCards(prodiName) {
     let statOrder = [
         { label: `Jumlah Mahasiswa`, key: "total", icon: "fas fa-users" },
         { label: "Mahasiswa KIPK", key: "KIPK", icon: "fas fa-users" },
-        { label: "Mahasiswa Non-Beasiswa", key: "Non Beasiswa", icon: "fas fa-users" }
+        { label: "Mahasiswa Non-Beasiswa", key: "Non KIPK", icon: "fas fa-users" }
     ];
 
     // Define common card background colors
     const commonCardColors = {
         "total": "#eaf6ff", // Light blue
         "KIPK": "#f8d7da", // Success (light green)
-        "Non Beasiswa": "#d4edda", // Light red
+        "Non KIPK": "#d4edda", // Light red
         "Tidak Diketahui Beasiswa": "#7f8c8d" // Default gray for unknown
     };
 
@@ -618,8 +618,8 @@ function updateTable(data, targetElementId, limit = null, showPagination = true)
         let beasiswaClass = "";
         if (beasiswaVal === "KIPK") {
             beasiswaClass = "beasiswa-kipk"; // Add this class to CSS for styling KIPK
-        } else if (beasiswaVal === "Non Beasiswa") {
-            beasiswaClass = "beasiswa-non"; // Add this class to CSS for styling Non Beasiswa
+        } else if (beasiswaVal === "Non KIPK") {
+            beasiswaClass = "beasiswa-non"; // Add this class to CSS for styling Non KIPK
         } else {
             beasiswaClass = "beasiswa-unknown"; // Default for unknown/other
         }
@@ -683,7 +683,7 @@ function generateProdiStatsTable(data, targetElementId) {
             prodiStats[prodi] = {
                 total: 0,
                 "KIPK": 0,
-                "Non Beasiswa": 0,
+                "Non KIPK": 0,
                 "Jumlah DPA": new Set() // To count unique DPA per prodi
             };
         }
@@ -691,8 +691,8 @@ function generateProdiStatsTable(data, targetElementId) {
 
         if (beasiswaVal === "KIPK") {
             prodiStats[prodi]["KIPK"]++;
-        } else if (beasiswaVal === "Non Beasiswa") {
-            prodiStats[prodi]["Non Beasiswa"]++;
+        } else if (beasiswaVal === "Non KIPK") {
+            prodiStats[prodi]["Non KIPK"]++;
         }
 
         if (d["Dosen Pembimbing Akademik"]) {
@@ -704,7 +704,7 @@ function generateProdiStatsTable(data, targetElementId) {
         prodi: prodiName,
         total: stats.total,
         KIPK: stats.KIPK,
-        "Non Beasiswa": stats["Non Beasiswa"],
+        "Non KIPK": stats["Non KIPK"],
         uniqueDPA: stats["Jumlah DPA"].size // Count of unique DPA
     }));
 
@@ -732,7 +732,7 @@ function generateProdiStatsTable(data, targetElementId) {
                 <td>${stats.prodi}</td>
                 <td>${stats.total}</td>
                 <td>${stats.KIPK}</td>
-                <td>${stats["Non Beasiswa"]}</td>
+                <td>${stats["Non KIPK"]}</td>
                 
             </tr>
         `;
@@ -761,11 +761,11 @@ function updateCharts(data) {
     };
     generatePieChart(countOccurrences(data, 'Program Studi'), 'programStudiChart', 'Distribusi Mahasiswa per Program Studi', prodiColorsMapping);
 
-    // New chart for Beasiswa distribution (KIPK vs Non Beasiswa)
+    // New chart for Beasiswa distribution (KIPK vs Non KIPK)
     const beasiswaCounts = countOccurrences(data, 'Beasiswa');
     const beasiswaColors = {
         "KIPK": '#f8d7da', // Green for KIPK
-        "Non Beasiswa": '#d4edda' // Red for Non Beasiswa
+        "Non KIPK": '#d4edda' // Red for Non KIPK
     };
     generatePieChart(beasiswaCounts, 'progressStatusChartSI', 'Distribusi Mahasiswa Berdasarkan Jenis Beasiswa', beasiswaColors); // Reusing SI chart ID for now
     document.getElementById('progressStatusChartSI').closest('.section').querySelector('h3').innerText = 'Distribusi Mahasiswa Berdasarkan Jenis Beasiswa';
@@ -941,7 +941,7 @@ function generatePieChart(dataCounts, targetElementId, title, colorMapping = {})
             case "Komputerisasi Akuntansi": return '#2ecc71'; // Green
             case "Teknik Multimedia dan Jaringan": return '#9b59b6'; // Purple
             case "KIPK": return '#f8d7da'; // Green for KIPK
-            case "Non Beasiswa": return '#d4edda'; // Red for Non Beasiswa
+            case "Non KIPK": return '#d4edda'; // Red for Non KIPK
             default: return '#7f8c8d'; // Default gray
         }
     });
@@ -993,7 +993,7 @@ function generatePieChart(dataCounts, targetElementId, title, colorMapping = {})
  * @param {string} contextName - Context name (e.g., Program study name).
  * @param {string} targetElementId - ID of the div element to place the chart in.
  * @param {string} title - Chart title.
- * @param {Array<string>} specificCategories - Array of specific categories (e.g., "KIPK", "Non Beasiswa").
+ * @param {Array<string>} specificCategories - Array of specific categories (e.g., "KIPK", "Non KIPK").
  */
 function generateProdiProgressPieChart(data, contextName, targetElementId, title, specificCategories) {
     const categoryCounts = {};
@@ -1009,7 +1009,7 @@ function generateProdiProgressPieChart(data, contextName, targetElementId, title
     // Mapping for display labels and custom colors
     const customCategoryMapping = {
         "KIPK": { label: "KIPK", color: '#f8d7da' },   // Green
-        "Non Beasiswa": { label: "Non-Beasiswa", color: '#d4edda' } // Red
+        "Non KIPK": { label: "Non-Beasiswa", color: '#d4edda' } // Red
     };
 
     // Order of labels to display in the pie chart and corresponding colors
@@ -1054,4 +1054,5 @@ function generateProdiProgressPieChart(data, contextName, targetElementId, title
     };
 
     Plotly.newPlot(targetElementId, dataPlotly, layout, {responsive: true, displayModeBar: false});
+
 }
