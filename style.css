@@ -393,7 +393,7 @@ td.program-studi {
 }
 /* New styles for Beasiswa status */
 .status-badge.beasiswa-kipk { background-color: #e74c3c; } /* Green for 'KIPK' */
-.status-badge.beasiswa-non { background-color: #2ecc71; } /* Red for 'Non Beasiswa' */
+.status-badge.beasiswa-non { background-color: #2ecc71; } /* Red for 'Non KIPK' */
 .status-badge.beasiswa-unknown { background-color: #7f8c8d; } /* Grey for 'Tidak Diketahui' */
 
 
@@ -725,4 +725,5 @@ body.sidebar-collapsed .main-wrapper { /* Adjust main-wrapper margin */
     #dosenStatsCards {
         grid-template-columns: 1fr; /* 1 kolom di layar sangat kecil */
     }
+
 }
