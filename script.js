@@ -379,7 +379,7 @@ function updateDosenListTable() {
             <th>Nama Dosen Pembimbing Akademik</th>
             <th>Jumlah Mahasiswa Bimbingan</th>
             <th>Mahasiswa KIPK</th>
-            <th>Mahasiswa Non-Beasiswa</th>
+            <th>Mahasiswa Non-KIPK</th>
         </tr>
     </thead><tbody>`;
 
@@ -718,7 +718,7 @@ function generateProdiStatsTable(data, targetElementId) {
                     <th>Program Studi</th>
                     <th>Jumlah Mahasiswa</th>
                     <th>Mahasiswa KIPK</th>
-                    <th>Mahasiswa Non-Beasiswa</th>
+                    <th>Mahasiswa Non-KIPK</th>
                     
                 </tr>
             </thead>
@@ -1009,7 +1009,7 @@ function generateProdiProgressPieChart(data, contextName, targetElementId, title
     // Mapping for display labels and custom colors
     const customCategoryMapping = {
         "KIPK": { label: "KIPK", color: '#f8d7da' },   // Green
-        "Non KIPK": { label: "Non-Beasiswa", color: '#d4edda' } // Red
+        "Non KIPK": { label: "Non-KIPK", color: '#d4edda' } // Red
     };
 
     // Order of labels to display in the pie chart and corresponding colors
@@ -1056,3 +1056,4 @@ function generateProdiProgressPieChart(data, contextName, targetElementId, title
     Plotly.newPlot(targetElementId, dataPlotly, layout, {responsive: true, displayModeBar: false});
 
 }
+
